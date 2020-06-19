@@ -47,6 +47,11 @@ class CppAdConan(ConanFile):
         self._cmake = CMake(self)
         self._cmake.definitions["cppad_tape_id_type"] = 'size_t'
         self._cmake.definitions["cppad_tape_addr_type"] = 'size_t'
+        if tools.Version(str(self.version)) > '20150000.9':
+            self._cmake.definitions['cppad_prefix'] = self.package_folder
+        else:
+            self._cmake.definitions['cmake_install_prefix'] = self.package_folder
+        
         self._cmake.configure()
         return self._cmake
 
